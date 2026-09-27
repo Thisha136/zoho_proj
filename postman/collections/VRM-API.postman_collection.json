@@ -1,0 +1,1231 @@
+{
+  "info": {
+    "name": "VRM API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base", "value": "http://localhost:8080/VRM-1.0-SNAPSHOT" },
+    { "key": "uid",  "value": "1" },
+    { "key": "gid",  "value": "1" }
+  ],
+  "item": [
+
+    {
+      "name": "01 - Users",
+      "item": [
+        {
+          "name": "Create user",
+          "request": {
+            "method": "POST",
+            "url": "{{base}}/users",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"thisha\",\n  \"email\": \"thisha@example.com\",\n  \"password\": \"Pass@1234\",\n  \"ph_no\": \"9876543210\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get user by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{base}}/users/{{uid}}"
+          }
+        },
+        {
+          "name": "Full update user (PUT)",
+          "request": {
+            "method": "PUT",
+            "url": "{{base}}/users/{{uid}}",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"thisha_updated\",\n  \"email\": \"thisha@example.com\",\n  \"ph_no\": \"9999999999\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Partial update user (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/users/{{uid}}",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ph_no\": \"8888888888\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Change password",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/users/{{uid}}/password",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"password\": \"NewPass@5678\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Change status (ADMIN)",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/users/{{uid}}/status",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"INACTIVE\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List all users (ADMIN)",
+          "request": { "method": "GET", "url": "{{base}}/users" }
+        },
+        {
+          "name": "Search users (ADMIN)",
+          "request": { "method": "GET", "url": "{{base}}/users?search=thisha" }
+        },
+        {
+          "name": "Filter users by status (ADMIN)",
+          "request": { "method": "GET", "url": "{{base}}/users?status=ACTIVE" }
+        },
+        {
+          "name": "Sort users (ADMIN)",
+          "request": { "method": "GET", "url": "{{base}}/users?sort=username&order=asc" }
+        },
+        {
+          "name": "Search + filter + sort (ADMIN)",
+          "request": { "method": "GET", "url": "{{base}}/users?search=thisha&status=ACTIVE&sort=created_at&order=desc" }
+        }
+      ]
+    },
+
+    {
+      "name": "02 - Addresses",
+      "item": [
+        {
+          "name": "Create address",
+          "request": {
+            "method": "POST",
+            "url": "{{base}}/users/{{uid}}/addresses",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address_type\": \"HOME\",\n  \"address_line\": \"12 MG Road\",\n  \"city\": \"Bangalore\",\n  \"state\": \"Karnataka\",\n  \"pincode\": \"560001\",\n  \"is_default\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "List all addresses",
+          "request": { "method": "GET", "url": "{{base}}/users/{{uid}}/addresses" }
+        },
+        {
+          "name": "Get address by ID",
+          "request": { "method": "GET", "url": "{{base}}/users/{{uid}}/addresses/1" }
+        },
+        {
+          "name": "Full update address (PUT)",
+          "request": {
+            "method": "PUT",
+            "url": "{{base}}/users/{{uid}}/addresses/1",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address_type\": \"WORK\",\n  \"address_line\": \"55 Brigade Road\",\n  \"city\": \"Bangalore\",\n  \"state\": \"Karnataka\",\n  \"pincode\": \"560025\",\n  \"is_default\": false\n}"
+            }
+          }
+        },
+        {
+          "name": "Partial update address (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/users/{{uid}}/addresses/1",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"city\": \"Mysore\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Set default address",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/users/{{uid}}/addresses/1/default"
+          }
+        },
+        {
+          "name": "Delete address",
+          "request": { "method": "DELETE", "url": "{{base}}/users/{{uid}}/addresses/1" }
+        }
+      ]
+    },
+
+    {
+      "name": "03 - Brands",
+      "item": [
+        {
+          "name": "Create brand (ADMIN)",
+          "request": {
+            "method": "POST",
+            "url": "{{base}}/brands",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"brand_name\": \"Honda\"\n}" }
+          }
+        },
+        {
+          "name": "List all brands",
+          "request": { "method": "GET", "url": "{{base}}/brands" }
+        },
+        {
+          "name": "Search brands",
+          "request": { "method": "GET", "url": "{{base}}/brands?search=hon" }
+        },
+        {
+          "name": "Get brand by ID",
+          "request": { "method": "GET", "url": "{{base}}/brands/1" }
+        },
+        {
+          "name": "Update brand (PUT)",
+          "request": {
+            "method": "PUT",
+            "url": "{{base}}/brands/1",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"brand_name\": \"Honda Motors\"\n}" }
+          }
+        },
+        {
+          "name": "Partial update brand (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/brands/1",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"brand_name\": \"HONDA\"\n}" }
+          }
+        },
+        {
+          "name": "Delete brand (ADMIN)",
+          "request": { "method": "DELETE", "url": "{{base}}/brands/1" }
+        }
+      ]
+    },
+
+    {
+      "name": "04 - Models",
+      "item": [
+        {
+          "name": "Create model (ADMIN)",
+          "request": {
+            "method": "POST",
+            "url": "{{base}}/models",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"bid\": 1,\n  \"model_name\": \"CB Shine\"\n}" }
+          }
+        },
+        {
+          "name": "List all models",
+          "request": { "method": "GET", "url": "{{base}}/models" }
+        },
+        {
+          "name": "Filter models by brand",
+          "request": { "method": "GET", "url": "{{base}}/models?bid=1" }
+        },
+        {
+          "name": "Get model by ID",
+          "request": { "method": "GET", "url": "{{base}}/models/1" }
+        },
+        {
+          "name": "Update model (PUT)",
+          "request": {
+            "method": "PUT",
+            "url": "{{base}}/models/1",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"bid\": 1,\n  \"model_name\": \"CB Shine 125\"\n}" }
+          }
+        },
+        {
+          "name": "Partial update model (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/models/1",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"model_name\": \"CB Shine 2026\"\n}" }
+          }
+        },
+        {
+          "name": "Delete model (ADMIN)",
+          "request": { "method": "DELETE", "url": "{{base}}/models/1" }
+        }
+      ]
+    },
+
+    {
+      "name": "05 - Variants",
+      "item": [
+        {
+          "name": "Create variant (ADMIN)",
+          "request": {
+            "method": "POST",
+            "url": "{{base}}/variants",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"model_id\": 1,\n  \"variant_name\": \"Drum Brake\"\n}" }
+          }
+        },
+        {
+          "name": "List all variants",
+          "request": { "method": "GET", "url": "{{base}}/variants" }
+        },
+        {
+          "name": "Filter variants by model",
+          "request": { "method": "GET", "url": "{{base}}/variants?model_id=1" }
+        },
+        {
+          "name": "Get variant by ID",
+          "request": { "method": "GET", "url": "{{base}}/variants/1" }
+        },
+        {
+          "name": "Update variant (PUT)",
+          "request": {
+            "method": "PUT",
+            "url": "{{base}}/variants/1",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"model_id\": 1,\n  \"variant_name\": \"Disc Brake\"\n}" }
+          }
+        },
+        {
+          "name": "Partial update variant (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/variants/1",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"variant_name\": \"Disc Brake CBS\"\n}" }
+          }
+        },
+        {
+          "name": "Delete variant (ADMIN)",
+          "request": { "method": "DELETE", "url": "{{base}}/variants/1" }
+        }
+      ]
+    },
+
+    {
+      "name": "06 - Bikes",
+      "item": [
+        {
+          "name": "Create bike (USER)",
+          "request": {
+            "method": "POST",
+            "url": "{{base}}/users/{{uid}}/bikes",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-User-Id", "value": "{{uid}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"variant_id\": 1,\n  \"manufacturing_year\": 2022,\n  \"purchase_date\": \"2022-06-15\",\n  \"registration_no\": \"KA01AB1234\",\n  \"fuel_type\": \"PETROL\",\n  \"odometer_reading\": 12500,\n  \"color\": \"Red\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List own bikes (USER)",
+          "request": {
+            "method": "GET",
+            "url": "{{base}}/users/{{uid}}/bikes",
+            "header": [{ "key": "X-User-Id", "value": "{{uid}}" }]
+          }
+        },
+        {
+          "name": "Get own bike by ID (USER)",
+          "request": {
+            "method": "GET",
+            "url": "{{base}}/users/{{uid}}/bikes/1",
+            "header": [{ "key": "X-User-Id", "value": "{{uid}}" }]
+          }
+        },
+        {
+          "name": "Full update bike (PUT)",
+          "request": {
+            "method": "PUT",
+            "url": "{{base}}/users/{{uid}}/bikes/1",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-User-Id", "value": "{{uid}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"variant_id\": 1,\n  \"manufacturing_year\": 2022,\n  \"purchase_date\": \"2022-06-15\",\n  \"registration_no\": \"KA01AB1234\",\n  \"fuel_type\": \"PETROL\",\n  \"odometer_reading\": 15000,\n  \"color\": \"Blue\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Partial update bike (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/users/{{uid}}/bikes/1",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-User-Id", "value": "{{uid}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"odometer_reading\": 16000\n}" }
+          }
+        },
+        {
+          "name": "Delete bike (USER)",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base}}/users/{{uid}}/bikes/1",
+            "header": [{ "key": "X-User-Id", "value": "{{uid}}" }]
+          }
+        },
+        {
+          "name": "List all bikes (ADMIN)",
+          "request": { "method": "GET", "url": "{{base}}/bikes" }
+        },
+        {
+          "name": "Filter bikes by user (ADMIN)",
+          "request": { "method": "GET", "url": "{{base}}/bikes?uid=1" }
+        },
+        {
+          "name": "Filter bikes by variant (ADMIN)",
+          "request": { "method": "GET", "url": "{{base}}/bikes?variant_id=1" }
+        },
+        {
+          "name": "Get bike by ID (ADMIN)",
+          "request": { "method": "GET", "url": "{{base}}/bikes/1" }
+        }
+      ]
+    },
+
+    {
+      "name": "07 - Garages",
+      "item": [
+        {
+          "name": "Create garage (ADMIN)",
+          "request": {
+            "method": "POST",
+            "url": "{{base}}/garages",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"garage_name\": \"SpeedFix Garage\",\n  \"address_line\": \"10 Industrial Area\",\n  \"city\": \"Bangalore\",\n  \"state\": \"Karnataka\",\n  \"pincode\": \"560058\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List all garages",
+          "request": { "method": "GET", "url": "{{base}}/garages" }
+        },
+        {
+          "name": "Find garages by variant (USER)",
+          "request": { "method": "GET", "url": "{{base}}/garages?variant_id=1" }
+        },
+        {
+          "name": "Get garage by ID",
+          "request": { "method": "GET", "url": "{{base}}/garages/{{gid}}" }
+        },
+        {
+          "name": "Full update garage (PUT)",
+          "request": {
+            "method": "PUT",
+            "url": "{{base}}/garages/{{gid}}",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"garage_name\": \"SpeedFix Pro\",\n  \"address_line\": \"10 Industrial Area\",\n  \"city\": \"Bangalore\",\n  \"state\": \"Karnataka\",\n  \"pincode\": \"560058\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Partial update garage (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/garages/{{gid}}",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"garage_name\": \"SpeedFix Elite\"\n}" }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "08 - Garage Variants",
+      "item": [
+        {
+          "name": "Add variant to garage",
+          "request": {
+            "method": "POST",
+            "url": "{{base}}/garages/{{gid}}/variants",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"variant_id\": 1\n}" }
+          }
+        },
+        {
+          "name": "Get garage variants",
+          "request": { "method": "GET", "url": "{{base}}/garages/{{gid}}/variants" }
+        },
+        {
+          "name": "Remove variant from garage",
+          "request": { "method": "DELETE", "url": "{{base}}/garages/{{gid}}/variants/1" }
+        }
+      ]
+    },
+
+    {
+      "name": "09 - Services",
+      "item": [
+        {
+          "name": "Create service (ADMIN)",
+          "request": {
+            "method": "POST",
+            "url": "{{base}}/services",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"service_name\": \"Oil Change\",\n  \"duration\": 60,\n  \"price\": 499.00,\n  \"service_type\": \"MAINTENANCE\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List all services",
+          "request": { "method": "GET", "url": "{{base}}/services" }
+        },
+        {
+          "name": "Filter by service type",
+          "request": { "method": "GET", "url": "{{base}}/services?service_type=MAINTENANCE" }
+        },
+        {
+          "name": "Sort by price ASC",
+          "request": { "method": "GET", "url": "{{base}}/services?sort=price&order=asc" }
+        },
+        {
+          "name": "Sort by price DESC",
+          "request": { "method": "GET", "url": "{{base}}/services?sort=price&order=desc" }
+        },
+        {
+          "name": "Get service by ID",
+          "request": { "method": "GET", "url": "{{base}}/services/1" }
+        },
+        {
+          "name": "Full update service (PUT)",
+          "request": {
+            "method": "PUT",
+            "url": "{{base}}/services/1",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"service_name\": \"Full Oil Change\",\n  \"duration\": 60,\n  \"price\": 549.00,\n  \"service_type\": \"MAINTENANCE\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Partial update service (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/services/1",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"price\": 599.00\n}" }
+          }
+        },
+        {
+          "name": "Delete service (ADMIN)",
+          "request": { "method": "DELETE", "url": "{{base}}/services/1" }
+        }
+      ]
+    },
+
+    {
+      "name": "10 - Garage Services",
+      "item": [
+        {
+          "name": "Add service to garage",
+          "request": {
+            "method": "POST",
+            "url": "{{base}}/garages/{{gid}}/services",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"sid\": 1\n}" }
+          }
+        },
+        {
+          "name": "List garage services",
+          "request": { "method": "GET", "url": "{{base}}/garages/{{gid}}/services" }
+        },
+        {
+          "name": "Get garage service by ID",
+          "request": { "method": "GET", "url": "{{base}}/garages/{{gid}}/services/1" }
+        },
+        {
+          "name": "Remove service from garage",
+          "request": { "method": "DELETE", "url": "{{base}}/garages/{{gid}}/services/1" }
+        }
+      ]
+    },
+
+    {
+      "name": "11 - Service Requests",
+      "item": [
+        {
+          "name": "Create service request (USER)",
+          "request": {
+            "method": "POST",
+            "url": "{{base}}/service-requests",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-User-Id", "value": "{{uid}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bike_id\": 1,\n  \"gid\": 1,\n  \"bid\": 1,\n  \"title\": \"Engine noise at startup\",\n  \"issue\": \"Loud knocking sound when engine starts\",\n  \"preferred_delivery_date\": \"2026-10-01\",\n  \"vehicle_handling_option\": \"DROP\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List own requests (USER)",
+          "request": {
+            "method": "GET",
+            "url": "{{base}}/service-requests",
+            "header": [{ "key": "X-User-Id", "value": "{{uid}}" }]
+          }
+        },
+        {
+          "name": "Filter by status (USER)",
+          "request": {
+            "method": "GET",
+            "url": "{{base}}/service-requests?status=PENDING",
+            "header": [{ "key": "X-User-Id", "value": "{{uid}}" }]
+          }
+        },
+        {
+          "name": "Filter by bike (USER)",
+          "request": {
+            "method": "GET",
+            "url": "{{base}}/service-requests?bike_id=1",
+            "header": [{ "key": "X-User-Id", "value": "{{uid}}" }]
+          }
+        },
+        {
+          "name": "Get request by ID",
+          "request": { "method": "GET", "url": "{{base}}/service-requests/1" }
+        },
+        {
+          "name": "Update request (USER PATCH)",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/service-requests/1",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-User-Id", "value": "{{uid}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated title\",\n  \"preferred_delivery_date\": \"2026-10-05\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Cancel request (USER)",
+          "request": {
+            "method": "POST",
+            "url": "{{base}}/service-requests/1/cancel",
+            "header": [{ "key": "X-User-Id", "value": "{{uid}}" }]
+          }
+        },
+        {
+          "name": "Respond to proposed date - ACCEPT (USER)",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/service-requests/1/date-response",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-User-Id", "value": "{{uid}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"response\": \"ACCEPTED\"\n}" }
+          }
+        },
+        {
+          "name": "Respond to proposed date - REJECT (USER)",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/service-requests/1/date-response",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-User-Id", "value": "{{uid}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"response\": \"REJECTED\"\n}" }
+          }
+        },
+        {
+          "name": "List garage requests (GARAGE)",
+          "request": {
+            "method": "GET",
+            "url": "{{base}}/garages/{{gid}}/service-requests",
+            "header": [{ "key": "X-Garage-Id", "value": "{{gid}}" }]
+          }
+        },
+        {
+          "name": "Filter garage requests by status",
+          "request": {
+            "method": "GET",
+            "url": "{{base}}/garages/{{gid}}/service-requests?status=PENDING",
+            "header": [{ "key": "X-Garage-Id", "value": "{{gid}}" }]
+          }
+        },
+        {
+          "name": "Filter garage requests by date range",
+          "request": {
+            "method": "GET",
+            "url": "{{base}}/garages/{{gid}}/service-requests?from=2026-09-01&to=2026-09-30",
+            "header": [{ "key": "X-Garage-Id", "value": "{{gid}}" }]
+          }
+        },
+        {
+          "name": "Record physical review (GARAGE)",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/garages/{{gid}}/service-requests/1/physical-review",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Garage-Id", "value": "{{gid}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"physical_review_date\": \"2026-09-22\"\n}" }
+          }
+        },
+        {
+          "name": "Propose delivery date (GARAGE)",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/garages/{{gid}}/service-requests/1/delivery-date",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Garage-Id", "value": "{{gid}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"garage_proposed_delivery_date\": \"2026-10-03\"\n}" }
+          }
+        },
+        {
+          "name": "Accept request (GARAGE)",
+          "request": {
+            "method": "POST",
+            "url": "{{base}}/garages/{{gid}}/service-requests/1/accept",
+            "header": [{ "key": "X-Garage-Id", "value": "{{gid}}" }]
+          }
+        },
+        {
+          "name": "Reject request (GARAGE)",
+          "request": {
+            "method": "POST",
+            "url": "{{base}}/garages/{{gid}}/service-requests/1/reject",
+            "header": [{ "key": "X-Garage-Id", "value": "{{gid}}" }]
+          }
+        },
+        {
+          "name": "Admin list all requests",
+          "request": { "method": "GET", "url": "{{base}}/service-requests" }
+        },
+        {
+          "name": "Admin filter by status",
+          "request": { "method": "GET", "url": "{{base}}/service-requests?status=PENDING" }
+        },
+        {
+          "name": "Admin filter by garage",
+          "request": { "method": "GET", "url": "{{base}}/service-requests?gid=1" }
+        },
+        {
+          "name": "Admin filter by brand",
+          "request": { "method": "GET", "url": "{{base}}/service-requests?bid=1" }
+        },
+        {
+          "name": "Admin filter by date range",
+          "request": { "method": "GET", "url": "{{base}}/service-requests?from=2026-09-01&to=2026-09-30" }
+        },
+        {
+          "name": "Admin update status",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/service-requests/1/status",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"ACCEPTED\"\n}" }
+          }
+        },
+        {
+          "name": "Count all requests (analytics)",
+          "request": { "method": "GET", "url": "{{base}}/service-requests/count" }
+        },
+        {
+          "name": "Count by status (analytics)",
+          "request": { "method": "GET", "url": "{{base}}/service-requests/count?status=PENDING" }
+        },
+        {
+          "name": "Garage request count (analytics)",
+          "request": { "method": "GET", "url": "{{base}}/garages/{{gid}}/service-requests/count" }
+        }
+      ]
+    },
+
+    {
+      "name": "12 - Jobs",
+      "item": [
+        {
+          "name": "Create job from request (GARAGE)",
+          "request": {
+            "method": "POST",
+            "url": "{{base}}/service-requests/1/job",
+            "header": [{ "key": "X-Garage-Id", "value": "{{gid}}" }]
+          }
+        },
+        {
+          "name": "List garage jobs",
+          "request": {
+            "method": "GET",
+            "url": "{{base}}/garages/{{gid}}/jobs",
+            "header": [{ "key": "X-Garage-Id", "value": "{{gid}}" }]
+          }
+        },
+        {
+          "name": "Filter garage jobs by status",
+          "request": {
+            "method": "GET",
+            "url": "{{base}}/garages/{{gid}}/jobs?status=CREATED",
+            "header": [{ "key": "X-Garage-Id", "value": "{{gid}}" }]
+          }
+        },
+        {
+          "name": "Get garage job by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{base}}/garages/{{gid}}/jobs/1",
+            "header": [{ "key": "X-Garage-Id", "value": "{{gid}}" }]
+          }
+        },
+        {
+          "name": "Update job status",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/garages/{{gid}}/jobs/1/status",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Garage-Id", "value": "{{gid}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"IN_PROGRESS\"\n}" }
+          }
+        },
+        {
+          "name": "Record service start",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/garages/{{gid}}/jobs/1/service-start",
+            "header": [{ "key": "X-Garage-Id", "value": "{{gid}}" }]
+          }
+        },
+        {
+          "name": "Record service end",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/garages/{{gid}}/jobs/1/service-end",
+            "header": [{ "key": "X-Garage-Id", "value": "{{gid}}" }]
+          }
+        },
+        {
+          "name": "Update expected delivery date",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/garages/{{gid}}/jobs/1/delivery-date",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Garage-Id", "value": "{{gid}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"expected_delivery_date\": \"2026-10-02\"\n}" }
+          }
+        },
+        {
+          "name": "Update pickup status",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/garages/{{gid}}/jobs/1/pickup-status",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Garage-Id", "value": "{{gid}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"pickup_status\": \"PICKED_UP\"\n}" }
+          }
+        },
+        {
+          "name": "Update delivery status",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/garages/{{gid}}/jobs/1/delivery-status",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Garage-Id", "value": "{{gid}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"delivery_status\": \"DELIVERED\"\n}" }
+          }
+        },
+        {
+          "name": "List own jobs (USER)",
+          "request": {
+            "method": "GET",
+            "url": "{{base}}/users/{{uid}}/jobs",
+            "header": [{ "key": "X-User-Id", "value": "{{uid}}" }]
+          }
+        },
+        {
+          "name": "Get own job by ID (USER)",
+          "request": {
+            "method": "GET",
+            "url": "{{base}}/users/{{uid}}/jobs/1",
+            "header": [{ "key": "X-User-Id", "value": "{{uid}}" }]
+          }
+        },
+        {
+          "name": "List all jobs (ADMIN)",
+          "request": { "method": "GET", "url": "{{base}}/jobs" }
+        },
+        {
+          "name": "Filter jobs by status (ADMIN)",
+          "request": { "method": "GET", "url": "{{base}}/jobs?status=IN_PROGRESS" }
+        },
+        {
+          "name": "Filter jobs by garage (ADMIN)",
+          "request": { "method": "GET", "url": "{{base}}/jobs?gid=1" }
+        },
+        {
+          "name": "Filter jobs by date range (ADMIN)",
+          "request": { "method": "GET", "url": "{{base}}/jobs?from=2026-09-01&to=2026-09-30" }
+        },
+        {
+          "name": "Job count - all (analytics)",
+          "request": { "method": "GET", "url": "{{base}}/jobs/count" }
+        },
+        {
+          "name": "Job count by status (analytics)",
+          "request": { "method": "GET", "url": "{{base}}/jobs/count?status=COMPLETED" }
+        },
+        {
+          "name": "Garage job count (analytics)",
+          "request": { "method": "GET", "url": "{{base}}/garages/{{gid}}/jobs/count" }
+        },
+        {
+          "name": "User job count (analytics)",
+          "request": { "method": "GET", "url": "{{base}}/users/{{uid}}/jobs/count" }
+        }
+      ]
+    },
+
+    {
+      "name": "13 - Job Services",
+      "item": [
+        {
+          "name": "Add service to job (GARAGE)",
+          "request": {
+            "method": "POST",
+            "url": "{{base}}/jobs/1/services",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Garage-Id", "value": "{{gid}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sid\": 1,\n  \"price\": 499.00,\n  \"selection_type\": \"REQUIRED\",\n  \"service_part_type\": \"OEM\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List job services",
+          "request": { "method": "GET", "url": "{{base}}/jobs/1/services" }
+        },
+        {
+          "name": "Get job service by ID",
+          "request": { "method": "GET", "url": "{{base}}/jobs/1/services/1" }
+        },
+        {
+          "name": "Update job service status",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/jobs/1/services/1/status",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Garage-Id", "value": "{{gid}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"IN_PROGRESS\"\n}" }
+          }
+        },
+        {
+          "name": "Record service start time",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/jobs/1/services/1/start",
+            "header": [{ "key": "X-Garage-Id", "value": "{{gid}}" }]
+          }
+        },
+        {
+          "name": "Record service complete time",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/jobs/1/services/1/complete",
+            "header": [{ "key": "X-Garage-Id", "value": "{{gid}}" }]
+          }
+        },
+        {
+          "name": "Record time taken",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/jobs/1/services/1/time",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Garage-Id", "value": "{{gid}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"time_taken\": 45\n}" }
+          }
+        },
+        {
+          "name": "Approve optional service (USER)",
+          "request": {
+            "method": "POST",
+            "url": "{{base}}/jobs/1/services/1/approve",
+            "header": [{ "key": "X-User-Id", "value": "{{uid}}" }]
+          }
+        },
+        {
+          "name": "Reject optional service (USER)",
+          "request": {
+            "method": "POST",
+            "url": "{{base}}/jobs/1/services/1/reject",
+            "header": [{ "key": "X-User-Id", "value": "{{uid}}" }]
+          }
+        },
+        {
+          "name": "List all job-services (ADMIN)",
+          "request": { "method": "GET", "url": "{{base}}/job-services" }
+        },
+        {
+          "name": "Filter by status (ADMIN)",
+          "request": { "method": "GET", "url": "{{base}}/job-services?status=COMPLETED" }
+        },
+        {
+          "name": "Filter by service (ADMIN)",
+          "request": { "method": "GET", "url": "{{base}}/job-services?sid=1" }
+        },
+        {
+          "name": "Count job-services (analytics)",
+          "request": { "method": "GET", "url": "{{base}}/job-services/count?sid=1" }
+        }
+      ]
+    },
+
+    {
+      "name": "14 - Invoices & Payments",
+      "item": [
+        {
+          "name": "Make payment (USER)",
+          "request": {
+            "method": "POST",
+            "url": "{{base}}/invoices/1/payments",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-User-Id", "value": "{{uid}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 499.00,\n  \"payment_method\": \"UPI\",\n  \"payment_reference\": \"UPI123456789\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List payments for invoice",
+          "request": { "method": "GET", "url": "{{base}}/invoices/1/payments" }
+        },
+        {
+          "name": "Get payment by ID",
+          "request": { "method": "GET", "url": "{{base}}/payments/1" }
+        },
+        {
+          "name": "List all payments (ADMIN)",
+          "request": { "method": "GET", "url": "{{base}}/payments" }
+        },
+        {
+          "name": "Filter payments by status",
+          "request": { "method": "GET", "url": "{{base}}/payments?status=PAID" }
+        },
+        {
+          "name": "Filter payments by garage",
+          "request": { "method": "GET", "url": "{{base}}/payments?gid=1" }
+        },
+        {
+          "name": "Filter payments by date range",
+          "request": { "method": "GET", "url": "{{base}}/payments?from=2026-09-01&to=2026-09-30" }
+        },
+        {
+          "name": "Payment summary (analytics)",
+          "request": { "method": "GET", "url": "{{base}}/payments/summary" }
+        },
+        {
+          "name": "Payment summary by date range",
+          "request": { "method": "GET", "url": "{{base}}/payments/summary?from=2026-09-01&to=2026-09-30" }
+        }
+      ]
+    },
+
+    {
+      "name": "15 - Feedback",
+      "item": [
+        {
+          "name": "Submit feedback (USER)",
+          "request": {
+            "method": "POST",
+            "url": "{{base}}/jobs/1/feedback",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-User-Id", "value": "{{uid}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 4,\n  \"comments\": \"Good service, a bit slow.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get feedback for job (USER)",
+          "request": {
+            "method": "GET",
+            "url": "{{base}}/jobs/1/feedback",
+            "header": [{ "key": "X-User-Id", "value": "{{uid}}" }]
+          }
+        },
+        {
+          "name": "Update feedback (USER)",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/feedback/1",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-User-Id", "value": "{{uid}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"rating\": 5,\n  \"comments\": \"Actually great service!\"\n}" }
+          }
+        },
+        {
+          "name": "List garage feedback (GARAGE)",
+          "request": {
+            "method": "GET",
+            "url": "{{base}}/garages/{{gid}}/feedback",
+            "header": [{ "key": "X-Garage-Id", "value": "{{gid}}" }]
+          }
+        },
+        {
+          "name": "List all feedback (ADMIN)",
+          "request": { "method": "GET", "url": "{{base}}/feedback" }
+        },
+        {
+          "name": "Filter feedback by garage (ADMIN)",
+          "request": { "method": "GET", "url": "{{base}}/feedback?gid=1" }
+        },
+        {
+          "name": "Filter feedback by rating (ADMIN)",
+          "request": { "method": "GET", "url": "{{base}}/feedback?rating=5" }
+        },
+        {
+          "name": "Feedback summary - overall (analytics)",
+          "request": { "method": "GET", "url": "{{base}}/feedback/summary" }
+        }
+      ]
+    },
+
+    {
+      "name": "16 - Garage Bays",
+      "item": [
+        {
+          "name": "Create bay",
+          "request": {
+            "method": "POST",
+            "url": "{{base}}/garages/{{gid}}/bays",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Garage-Id", "value": "{{gid}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"bay_name\": \"Bay A\",\n  \"status\": \"AVAILABLE\"\n}" }
+          }
+        },
+        {
+          "name": "List bays",
+          "request": { "method": "GET", "url": "{{base}}/garages/{{gid}}/bays" }
+        },
+        {
+          "name": "Get bay by ID",
+          "request": { "method": "GET", "url": "{{base}}/garages/{{gid}}/bays/1" }
+        },
+        {
+          "name": "Update bay (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/garages/{{gid}}/bays/1",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Garage-Id", "value": "{{gid}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"UNDER_MAINTENANCE\"\n}" }
+          }
+        },
+        {
+          "name": "Delete bay",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base}}/garages/{{gid}}/bays/1",
+            "header": [{ "key": "X-Garage-Id", "value": "{{gid}}" }]
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "17 - Bay Allocations",
+      "item": [
+        {
+          "name": "Allocate bay to job",
+          "request": {
+            "method": "POST",
+            "url": "{{base}}/garages/{{gid}}/bay-allocations",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Garage-Id", "value": "{{gid}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bay_id\": 1,\n  \"jid\": 1,\n  \"start_date\": \"2026-09-22\",\n  \"end_date\": \"2026-09-23\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List all allocations",
+          "request": { "method": "GET", "url": "{{base}}/garages/{{gid}}/bay-allocations" }
+        },
+        {
+          "name": "Get allocation by ID",
+          "request": { "method": "GET", "url": "{{base}}/garages/{{gid}}/bay-allocations/1" }
+        },
+        {
+          "name": "Update allocation status",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base}}/garages/{{gid}}/bay-allocations/1",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Garage-Id", "value": "{{gid}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"COMPLETED\"\n}" }
+          }
+        },
+        {
+          "name": "Check bay availability",
+          "request": {
+            "method": "GET",
+            "url": "{{base}}/garages/{{gid}}/bay-availability?date=2026-09-22"
+          }
+        }
+      ]
+    }
+
+  ]
+}

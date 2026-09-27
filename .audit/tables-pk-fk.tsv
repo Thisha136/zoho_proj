@@ -1,0 +1,130 @@
+TABLE_NAME	ORDINAL_POSITION	COLUMN_NAME	COLUMN_TYPE	IS_NULLABLE	COLUMN_DEFAULT	pk_flag	fk_target
+addresses	1	address_id	bigint	NO	NULL	PK	
+addresses	2	uid	bigint	NO	NULL		FK -> users.uid
+addresses	3	address_type	enum('HOME','OFFICE','OTHER')	NO	NULL		
+addresses	4	address_line	varchar(255)	NO	NULL		
+addresses	5	city	varchar(100)	NO	NULL		
+addresses	6	state	varchar(100)	NO	NULL		
+addresses	7	pincode	varchar(10)	NO	NULL		
+addresses	8	created_at	datetime	NO	CURRENT_TIMESTAMP		
+addresses	9	updated_at	datetime	NO	CURRENT_TIMESTAMP		
+bay_allocations	1	allocation_id	bigint	NO	NULL	PK	
+bay_allocations	2	bay_id	bigint	NO	NULL		FK -> garage_bays.bay_id
+bay_allocations	3	jid	bigint	NO	NULL		FK -> jobs.jid
+bay_allocations	4	start_date	date	NO	NULL		
+bay_allocations	5	end_date	date	NO	NULL		
+bay_allocations	6	status	varchar(20)	YES	ACTIVE		
+bikes	1	bike_id	bigint	NO	NULL	PK	
+bikes	2	uid	bigint	NO	NULL		FK -> users.uid
+bikes	3	variant_id	bigint	NO	NULL		FK -> variants.variant_id
+bikes	4	registration_no	varchar(20)	NO	NULL		
+bikes	5	manufacturing_year	year	YES	NULL		
+bikes	6	purchase_date	date	YES	NULL		
+bikes	7	color	varchar(30)	YES	NULL		
+bikes	8	image_url	varchar(500)	YES	NULL		
+bikes	9	created_at	datetime	NO	CURRENT_TIMESTAMP		
+bikes	10	updated_at	datetime	NO	CURRENT_TIMESTAMP		
+brands	1	bid	bigint	NO	NULL	PK	
+brands	2	brand_name	varchar(100)	NO	NULL		
+feedback	1	feedback_id	bigint	NO	NULL	PK	
+feedback	2	jid	bigint	NO	NULL		FK -> jobs.jid
+feedback	3	uid	bigint	NO	NULL		FK -> users.uid
+feedback	4	gid	bigint	NO	NULL		FK -> garages.gid
+feedback	5	rating	int	NO	NULL		
+feedback	6	comments	text	YES	NULL		
+feedback	7	created_at	datetime	YES	CURRENT_TIMESTAMP		
+garage_bays	1	bay_id	bigint	NO	NULL	PK	
+garage_bays	2	gid	bigint	NO	NULL		FK -> garages.gid
+garage_bays	3	bay_name	varchar(50)	NO	NULL		
+garage_services	1	gid	bigint	NO	NULL	PK	FK -> garages.gid
+garage_services	2	sid	bigint	NO	NULL	PK	FK -> services.sid
+garage_services	3	duration	int	YES	NULL		
+garage_services	4	price	decimal(10,2)	YES	NULL		
+garage_variants	1	gid	bigint	NO	NULL	PK	FK -> garages.gid
+garage_variants	2	variant_id	bigint	NO	NULL	PK	FK -> variants.variant_id
+garages	1	gid	bigint	NO	NULL	PK	
+garages	2	garage_name	varchar(150)	NO	NULL		
+garages	3	address_line	varchar(255)	YES	NULL		
+garages	4	city	varchar(100)	YES	NULL		
+garages	5	state	varchar(100)	YES	NULL		
+garages	6	pincode	varchar(10)	YES	NULL		
+invoices	1	iv_id	bigint	NO	NULL	PK	
+invoices	2	jid	bigint	NO	NULL		FK -> jobs.jid
+invoices	3	status	enum('UNPAID','PENDING','GENERATED','PAID','CANCELLED')	NO	UNPAID		
+invoices	4	invoice_date	datetime	NO	CURRENT_TIMESTAMP		
+invoices	5	amount	decimal(10,2)	NO	NULL		
+job_services	1	js_id	bigint	NO	NULL	PK	
+job_services	2	jid	bigint	NO	NULL		FK -> jobs.jid
+job_services	3	sid	bigint	NO	NULL		FK -> services.sid
+job_services	4	status	enum('PENDING','IN_PROGRESS','APPROVED','REJECTED','COMPLETED')	NO	PENDING		
+job_services	5	selection_type	enum('COMPULSORY','OPTIONAL')	NO	NULL		
+job_services	6	price	decimal(10,2)	NO	NULL		
+job_services	7	service_part_type	enum('SERVICE','PART')	NO	NULL		
+job_services	8	actual_start_time	datetime	YES	NULL		
+job_services	9	actual_end_time	datetime	YES	NULL		
+job_services	10	time_taken	int	YES	NULL		
+jobs	1	jid	bigint	NO	NULL	PK	
+jobs	2	sr_id	bigint	NO	NULL		FK -> service_requests.sr_id
+jobs	3	status	enum('CREATED','PENDING','APPROVED','REJECTED','COMPLETED')	NO	CREATED		
+jobs	4	job_date	datetime	NO	CURRENT_TIMESTAMP		
+jobs	5	service_start_date	datetime	YES	NULL		
+jobs	6	service_end_date	datetime	YES	NULL		
+jobs	7	expected_delivery_date	date	YES	NULL		
+jobs	8	actual_delivery_date	date	YES	NULL		
+jobs	9	pickup_status	varchar(20)	YES	NULL		
+jobs	10	delivery_status	varchar(20)	YES	NULL		
+mechanic_allocations	1	allocation_id	bigint	NO	NULL	PK	
+mechanic_allocations	2	mechanic_id	bigint	NO	NULL		FK -> mechanics.mechanic_id
+mechanic_allocations	3	jid	bigint	NO	NULL		FK -> jobs.jid
+mechanic_allocations	4	js_id	bigint	NO	NULL		FK -> job_services.js_id
+mechanic_allocations	5	start_datetime	datetime	NO	NULL		
+mechanic_allocations	6	end_datetime	datetime	NO	NULL		
+mechanic_allocations	7	status	enum('ALLOCATED','IN_PROGRESS','COMPLETED','CANCELLED')	NO	ALLOCATED		
+mechanic_allocations	8	notes	varchar(500)	YES	NULL		
+mechanic_allocations	9	created_at	timestamp	NO	CURRENT_TIMESTAMP		
+mechanics	1	mechanic_id	bigint	NO	NULL	PK	
+mechanics	2	gid	bigint	NO	NULL		FK -> garages.gid
+mechanics	3	mechanic_name	varchar(100)	NO	NULL		
+mechanics	4	specialization	varchar(100)	NO	NULL		
+mechanics	5	free_from	datetime	YES	NULL		
+mechanics	6	created_at	timestamp	NO	CURRENT_TIMESTAMP		
+mechanics	7	updated_at	timestamp	NO	CURRENT_TIMESTAMP		
+models	1	model_id	bigint	NO	NULL	PK	
+models	2	bid	bigint	NO	NULL		FK -> brands.bid
+models	3	model_name	varchar(100)	NO	NULL		
+payments	1	payment_id	bigint	NO	NULL	PK	
+payments	2	iv_id	bigint	NO	NULL		FK -> invoices.iv_id
+payments	3	amount	decimal(10,2)	NO	NULL		
+payments	4	payment_method	varchar(30)	NO	NULL		
+payments	5	payment_reference	varchar(100)	YES	NULL		
+payments	6	status	enum('PENDING','PAID','SUCCESS','FAILED','REFUNDED')	NO	PENDING		
+payments	7	payment_date	datetime	YES	CURRENT_TIMESTAMP		
+service_requests	1	sr_id	bigint	NO	NULL	PK	
+service_requests	2	bike_id	bigint	NO	NULL		FK -> bikes.bike_id
+service_requests	3	title	varchar(200)	NO	NULL		
+service_requests	4	issue	text	NO	NULL		
+service_requests	5	image_url	varchar(500)	YES	NULL		
+service_requests	6	gid	bigint	YES	NULL		FK -> garages.gid
+service_requests	7	status	enum('PENDING','REVIEWED','DATE_PROPOSED','DATE_REJECTED','ACCEPTED','REJECTED','CANCELLED','COMPLETED')	NO	PENDING		
+service_requests	8	request_date	datetime	NO	CURRENT_TIMESTAMP		
+service_requests	9	preferred_delivery_date	date	YES	NULL		
+service_requests	10	garage_proposed_delivery_date	date	YES	NULL		
+service_requests	11	customer_date_response	varchar(20)	YES	NULL		
+service_requests	12	physical_review_date	datetime	YES	NULL		
+service_requests	13	vehicle_handling_option	varchar(20)	YES	NULL		
+services	1	sid	bigint	NO	NULL	PK	
+services	2	service_name	varchar(150)	NO	NULL		
+services	3	service_type	enum('SERVICE','PART','MAINTENANCE')	NO	NULL		
+users	1	uid	bigint	NO	NULL	PK	
+users	2	username	varchar(100)	NO	NULL		
+users	3	email	varchar(150)	NO	NULL		
+users	4	password	varchar(255)	NO	NULL		
+users	5	ph_no	varchar(15)	YES	NULL		
+users	6	status	enum('ACTIVE','INACTIVE','BLOCKED')	NO	ACTIVE		
+users	7	created_at	datetime	NO	CURRENT_TIMESTAMP		
+users	8	updated_at	datetime	NO	CURRENT_TIMESTAMP		
+users	9	version	int	NO	0		
+users	10	default_address_id	bigint	YES	NULL		FK -> addresses.address_id
+variants	1	variant_id	bigint	NO	NULL	PK	
+variants	2	model_id	bigint	NO	NULL		FK -> models.model_id
+variants	3	variant_name	varchar(100)	NO	NULL		

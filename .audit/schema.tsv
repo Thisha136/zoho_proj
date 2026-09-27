@@ -1,0 +1,231 @@
+TABLE_NAME	TABLE_ROWS
+addresses	0
+bay_allocations	0
+bikes	4
+brands	2
+feedback	3
+garage_bays	0
+garage_services	0
+garage_variants	0
+garages	0
+invoices	4
+job_services	1
+jobs	4
+mechanic_allocations	0
+mechanics	0
+models	0
+payments	3
+service_requests	5
+services	0
+users	1
+variants	0
+TABLE_NAME	ORDINAL_POSITION	COLUMN_NAME	COLUMN_TYPE	IS_NULLABLE	COLUMN_DEFAULT	COLUMN_KEY	EXTRA
+addresses	1	address_id	bigint	NO	NULL	PRI	auto_increment
+addresses	2	uid	bigint	NO	NULL	MUL	
+addresses	3	address_type	enum('HOME','OFFICE','OTHER')	NO	NULL		
+addresses	4	address_line	varchar(255)	NO	NULL		
+addresses	5	city	varchar(100)	NO	NULL		
+addresses	6	state	varchar(100)	NO	NULL		
+addresses	7	pincode	varchar(10)	NO	NULL		
+addresses	8	created_at	datetime	NO	CURRENT_TIMESTAMP		DEFAULT_GENERATED
+addresses	9	updated_at	datetime	NO	CURRENT_TIMESTAMP		DEFAULT_GENERATED on update CURRENT_TIMESTAMP
+bay_allocations	1	allocation_id	bigint	NO	NULL	PRI	auto_increment
+bay_allocations	2	bay_id	bigint	NO	NULL	MUL	
+bay_allocations	3	jid	bigint	NO	NULL	MUL	
+bay_allocations	4	start_date	date	NO	NULL		
+bay_allocations	5	end_date	date	NO	NULL		
+bay_allocations	6	status	varchar(20)	YES	ACTIVE		
+bikes	1	bike_id	bigint	NO	NULL	PRI	auto_increment
+bikes	2	uid	bigint	NO	NULL	MUL	
+bikes	3	variant_id	bigint	NO	NULL	MUL	
+bikes	4	registration_no	varchar(20)	NO	NULL	UNI	
+bikes	5	manufacturing_year	year	YES	NULL		
+bikes	6	purchase_date	date	YES	NULL		
+bikes	7	color	varchar(30)	YES	NULL		
+bikes	8	image_url	varchar(500)	YES	NULL		
+bikes	9	created_at	datetime	NO	CURRENT_TIMESTAMP		DEFAULT_GENERATED
+bikes	10	updated_at	datetime	NO	CURRENT_TIMESTAMP		DEFAULT_GENERATED on update CURRENT_TIMESTAMP
+brands	1	bid	bigint	NO	NULL	PRI	auto_increment
+brands	2	brand_name	varchar(100)	NO	NULL	UNI	
+feedback	1	feedback_id	bigint	NO	NULL	PRI	auto_increment
+feedback	2	jid	bigint	NO	NULL	MUL	
+feedback	3	uid	bigint	NO	NULL	MUL	
+feedback	4	gid	bigint	NO	NULL	MUL	
+feedback	5	rating	int	NO	NULL		
+feedback	6	comments	text	YES	NULL		
+feedback	7	created_at	datetime	YES	CURRENT_TIMESTAMP		DEFAULT_GENERATED
+garage_bays	1	bay_id	bigint	NO	NULL	PRI	auto_increment
+garage_bays	2	gid	bigint	NO	NULL	MUL	
+garage_bays	3	bay_name	varchar(50)	NO	NULL		
+garage_services	1	gid	bigint	NO	NULL	PRI	
+garage_services	2	sid	bigint	NO	NULL	PRI	
+garage_services	3	duration	int	YES	NULL		
+garage_services	4	price	decimal(10,2)	YES	NULL		
+garage_variants	1	gid	bigint	NO	NULL	PRI	
+garage_variants	2	variant_id	bigint	NO	NULL	PRI	
+garages	1	gid	bigint	NO	NULL	PRI	auto_increment
+garages	2	garage_name	varchar(150)	NO	NULL		
+garages	3	address_line	varchar(255)	YES	NULL		
+garages	4	city	varchar(100)	YES	NULL		
+garages	5	state	varchar(100)	YES	NULL		
+garages	6	pincode	varchar(10)	YES	NULL		
+invoices	1	iv_id	bigint	NO	NULL	PRI	auto_increment
+invoices	2	jid	bigint	NO	NULL	MUL	
+invoices	3	status	enum('UNPAID','PENDING','GENERATED','PAID','CANCELLED')	NO	UNPAID		
+invoices	4	invoice_date	datetime	NO	CURRENT_TIMESTAMP		DEFAULT_GENERATED
+invoices	5	amount	decimal(10,2)	NO	NULL		
+job_services	1	js_id	bigint	NO	NULL	PRI	auto_increment
+job_services	2	jid	bigint	NO	NULL	MUL	
+job_services	3	sid	bigint	NO	NULL	MUL	
+job_services	4	status	enum('PENDING','IN_PROGRESS','APPROVED','REJECTED','COMPLETED')	NO	PENDING		
+job_services	5	selection_type	enum('COMPULSORY','OPTIONAL')	NO	NULL		
+job_services	6	price	decimal(10,2)	NO	NULL		
+job_services	7	service_part_type	enum('SERVICE','PART')	NO	NULL		
+job_services	8	actual_start_time	datetime	YES	NULL		
+job_services	9	actual_end_time	datetime	YES	NULL		
+job_services	10	time_taken	int	YES	NULL		
+jobs	1	jid	bigint	NO	NULL	PRI	auto_increment
+jobs	2	sr_id	bigint	NO	NULL	MUL	
+jobs	3	status	enum('CREATED','PENDING','APPROVED','REJECTED','COMPLETED')	NO	CREATED		
+jobs	4	job_date	datetime	NO	CURRENT_TIMESTAMP		DEFAULT_GENERATED
+jobs	5	service_start_date	datetime	YES	NULL		
+jobs	6	service_end_date	datetime	YES	NULL		
+jobs	7	expected_delivery_date	date	YES	NULL		
+jobs	8	actual_delivery_date	date	YES	NULL		
+jobs	9	pickup_status	varchar(20)	YES	NULL		
+jobs	10	delivery_status	varchar(20)	YES	NULL		
+mechanic_allocations	1	allocation_id	bigint	NO	NULL	PRI	auto_increment
+mechanic_allocations	2	mechanic_id	bigint	NO	NULL	MUL	
+mechanic_allocations	3	jid	bigint	NO	NULL	MUL	
+mechanic_allocations	4	js_id	bigint	NO	NULL	MUL	
+mechanic_allocations	5	start_datetime	datetime	NO	NULL		
+mechanic_allocations	6	end_datetime	datetime	NO	NULL		
+mechanic_allocations	7	status	enum('ALLOCATED','IN_PROGRESS','COMPLETED','CANCELLED')	NO	ALLOCATED		
+mechanic_allocations	8	notes	varchar(500)	YES	NULL		
+mechanic_allocations	9	created_at	timestamp	NO	CURRENT_TIMESTAMP		DEFAULT_GENERATED
+mechanics	1	mechanic_id	bigint	NO	NULL	PRI	auto_increment
+mechanics	2	gid	bigint	NO	NULL	MUL	
+mechanics	3	mechanic_name	varchar(100)	NO	NULL		
+mechanics	4	specialization	varchar(100)	NO	NULL		
+mechanics	5	free_from	datetime	YES	NULL		
+mechanics	6	created_at	timestamp	NO	CURRENT_TIMESTAMP		DEFAULT_GENERATED
+mechanics	7	updated_at	timestamp	NO	CURRENT_TIMESTAMP		DEFAULT_GENERATED on update CURRENT_TIMESTAMP
+models	1	model_id	bigint	NO	NULL	PRI	auto_increment
+models	2	bid	bigint	NO	NULL	MUL	
+models	3	model_name	varchar(100)	NO	NULL		
+payments	1	payment_id	bigint	NO	NULL	PRI	auto_increment
+payments	2	iv_id	bigint	NO	NULL	MUL	
+payments	3	amount	decimal(10,2)	NO	NULL		
+payments	4	payment_method	varchar(30)	NO	NULL		
+payments	5	payment_reference	varchar(100)	YES	NULL		
+payments	6	status	enum('PENDING','PAID','SUCCESS','FAILED','REFUNDED')	NO	PENDING		
+payments	7	payment_date	datetime	YES	CURRENT_TIMESTAMP		DEFAULT_GENERATED
+service_requests	1	sr_id	bigint	NO	NULL	PRI	auto_increment
+service_requests	2	uid	bigint	YES	NULL		
+service_requests	3	bike_id	bigint	YES	NULL		
+service_requests	4	odometer_reading	int	YES	NULL		
+service_requests	5	title	varchar(200)	NO	NULL		
+service_requests	6	issue	text	NO	NULL		
+service_requests	7	image_url	varchar(500)	YES	NULL		
+service_requests	8	bid	bigint	NO	NULL	MUL	
+service_requests	9	gid	bigint	YES	NULL	MUL	
+service_requests	10	status	enum('PENDING','REVIEWED','DATE_PROPOSED','DATE_REJECTED','ACCEPTED','REJECTED','CANCELLED','COMPLETED')	NO	PENDING		
+service_requests	11	request_date	datetime	NO	CURRENT_TIMESTAMP		DEFAULT_GENERATED
+service_requests	12	preferred_delivery_date	date	YES	NULL		
+service_requests	13	garage_proposed_delivery_date	date	YES	NULL		
+service_requests	14	customer_date_response	varchar(20)	YES	NULL		
+service_requests	15	physical_review_date	datetime	YES	NULL		
+service_requests	16	vehicle_handling_option	varchar(20)	YES	NULL		
+services	1	sid	bigint	NO	NULL	PRI	auto_increment
+services	2	service_name	varchar(150)	NO	NULL		
+services	3	service_type	enum('SERVICE','PART','MAINTENANCE')	NO	NULL		
+users	1	uid	bigint	NO	NULL	PRI	auto_increment
+users	2	username	varchar(100)	NO	NULL		
+users	3	email	varchar(150)	NO	NULL	UNI	
+users	4	password	varchar(255)	NO	NULL		
+users	5	ph_no	varchar(15)	YES	NULL		
+users	6	status	enum('ACTIVE','INACTIVE','BLOCKED')	NO	ACTIVE		
+users	7	created_at	datetime	NO	CURRENT_TIMESTAMP		DEFAULT_GENERATED
+users	8	updated_at	datetime	NO	CURRENT_TIMESTAMP		DEFAULT_GENERATED on update CURRENT_TIMESTAMP
+users	9	version	int	NO	0		
+users	10	default_address_id	bigint	YES	NULL	MUL	
+variants	1	variant_id	bigint	NO	NULL	PRI	auto_increment
+variants	2	model_id	bigint	NO	NULL	MUL	
+variants	3	variant_name	varchar(100)	NO	NULL		
+TABLE_NAME	CONSTRAINT_NAME	COLUMN_NAME	REFERENCED_TABLE_NAME	REFERENCED_COLUMN_NAME
+addresses	addresses_ibfk_1	uid	users	uid
+bay_allocations	bay_allocations_ibfk_1	bay_id	garage_bays	bay_id
+bay_allocations	bay_allocations_ibfk_2	jid	jobs	jid
+bikes	bikes_ibfk_1	uid	users	uid
+bikes	bikes_ibfk_2	variant_id	variants	variant_id
+feedback	feedback_ibfk_1	jid	jobs	jid
+feedback	feedback_ibfk_2	uid	users	uid
+feedback	feedback_ibfk_3	gid	garages	gid
+garage_bays	garage_bays_ibfk_1	gid	garages	gid
+garage_services	garage_services_ibfk_1	gid	garages	gid
+garage_services	garage_services_ibfk_2	sid	services	sid
+garage_variants	garage_variants_ibfk_1	gid	garages	gid
+garage_variants	garage_variants_ibfk_2	variant_id	variants	variant_id
+invoices	invoices_ibfk_1	jid	jobs	jid
+job_services	job_services_ibfk_1	jid	jobs	jid
+job_services	job_services_ibfk_2	sid	services	sid
+jobs	jobs_ibfk_1	sr_id	service_requests	sr_id
+mechanic_allocations	fk_allocations_job	jid	jobs	jid
+mechanic_allocations	fk_allocations_job_service	js_id	job_services	js_id
+mechanic_allocations	fk_allocations_mechanic	mechanic_id	mechanics	mechanic_id
+mechanics	fk_mechanics_garage	gid	garages	gid
+models	models_ibfk_1	bid	brands	bid
+payments	payments_ibfk_1	iv_id	invoices	iv_id
+service_requests	service_requests_ibfk_1	bid	bikes	bike_id
+service_requests	service_requests_ibfk_2	gid	garages	gid
+users	fk_users_default_address	default_address_id	addresses	address_id
+variants	variants_ibfk_1	model_id	models	model_id
+TABLE_NAME	INDEX_NAME	NON_UNIQUE	columns
+addresses	PRIMARY	0	address_id
+addresses	uid	1	uid
+bay_allocations	bay_id	1	bay_id
+bay_allocations	jid	1	jid
+bay_allocations	PRIMARY	0	allocation_id
+bikes	PRIMARY	0	bike_id
+bikes	registration_no	0	registration_no
+bikes	uid	1	uid
+bikes	variant_id	1	variant_id
+brands	brand_name	0	brand_name
+brands	PRIMARY	0	bid
+feedback	gid	1	gid
+feedback	jid	1	jid
+feedback	PRIMARY	0	feedback_id
+feedback	uid	1	uid
+garage_bays	gid	0	gid,bay_name
+garage_bays	PRIMARY	0	bay_id
+garage_services	PRIMARY	0	gid,sid
+garage_services	sid	1	sid
+garage_variants	PRIMARY	0	gid,variant_id
+garage_variants	variant_id	1	variant_id
+garages	PRIMARY	0	gid
+invoices	jid	1	jid
+invoices	PRIMARY	0	iv_id
+job_services	jid	1	jid
+job_services	PRIMARY	0	js_id
+job_services	sid	1	sid
+jobs	PRIMARY	0	jid
+jobs	sr_id	1	sr_id
+mechanic_allocations	fk_allocations_job	1	jid
+mechanic_allocations	fk_allocations_mechanic	1	mechanic_id
+mechanic_allocations	PRIMARY	0	allocation_id
+mechanic_allocations	uq_allocation_job_service_mechanic	0	js_id,mechanic_id
+mechanics	fk_mechanics_garage	1	gid
+mechanics	PRIMARY	0	mechanic_id
+models	bid	0	bid,model_name
+models	PRIMARY	0	model_id
+payments	iv_id	1	iv_id
+payments	PRIMARY	0	payment_id
+service_requests	bid	1	bid
+service_requests	gid	1	gid
+service_requests	PRIMARY	0	sr_id
+services	PRIMARY	0	sid
+users	email	0	email
+users	fk_users_default_address	1	default_address_id
+users	PRIMARY	0	uid
+variants	model_id	0	model_id,variant_name
+variants	PRIMARY	0	variant_id
